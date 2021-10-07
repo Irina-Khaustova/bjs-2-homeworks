@@ -28,15 +28,16 @@ function getArrayParams(arr) {
 
 
 function makeWork(arrOfArr, func) {
-  let max = worker(arrOfArr[0]); 
+  let max = func(arrOfArr[0]); 
 
   for (let i = 1; i < arrOfArr.length; i++) {
-    if (worker(arrOfArr[i]) > max) {
-      max = worker(arrOfArr[i]);
+    const funcValue = func(arrOfArr[i]);
+    if (funcValue > max) {
+      max = funcValue;
     }
   }
   
-  return max
+  return max;
 }
 
 // Задание 3
@@ -51,7 +52,7 @@ function worker2(arr) {
     if (arr[i] < min){
       min = arr[i];
     }
- diff = Math.abs(max - min);
- }
+  }
+   diff = Math.abs(max - min);
    return diff;
 }
