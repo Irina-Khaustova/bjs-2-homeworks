@@ -18,10 +18,12 @@ Student.prototype.addMark = function(mark) {
 }
 Student.prototype.addMarks = function(...markss) {
     for (let mark of markss) {
-    this.marks.push(mark);
-    } 
+    if(this.marks === undefined){ 
+    this.marks = new Array();
 }
-
+    this.marks.push(+mark);
+}
+}
 Student.prototype.getAverage = function() {
   const previousValue = 0;
   return (this.marks.reduce((previousValue, currentValue, index) => (previousValue + currentValue)))/this.marks.length;
