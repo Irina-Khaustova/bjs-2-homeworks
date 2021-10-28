@@ -46,7 +46,7 @@ class AlarmClock {
     if (this.timerId) {
       clearsetInterval(this.check);
       this.timerId = null;
-    }
+    };
   }
  
   printAlarms () {
