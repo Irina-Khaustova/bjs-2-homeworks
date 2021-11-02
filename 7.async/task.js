@@ -6,48 +6,47 @@ class AlarmClock {
 	addClock (time, callback, id){
       if (id === undefined) {
         throw new Error("не передан параметр id");
-      }
+      };
       if (this.alarmCollection.find(item => item.id === id)) {
         console.error('будильник с таким id уже существует')
-      };
-      this.alarmCollection.push({id, time, callback})
+      }
+      else {this.alarmCollection.push({id, time, callback})};
 	};
 
   removeClock (id) {
   	  let alarmLength1 = this.alarmCollection.length;
-	  let delClock = this.alarmCollection.find(item => item.id === id);
-      this.alarmCollection.splice(this.alarmCollection.indexOf(delClock), 1);
+	  this.alarmCollection = this.alarmCollection.filter(item => item.id !== id);
       let alarmLength2 = this.alarmCollection.length;
-      return (alarmLength1 === alarmLength2); 
-	}
+      return (alarmLength1 !== alarmLength2);  
+	};
 
   getCurrentFormattedTime () {
     let time = new Date ()
     return time.toLocaleTimeString([], {timeZone: 'Europe/Moscow', hour: 'numeric', minute: 'numeric', hour12: false});
-  }
+  };
 
-  start () {
-    function checkClock (ddt) {
-      if (this.getCurrentFormattedTime() === ddt.time) {
-        return ddt.callback();
+   start () {
+    const checkClock = (alarm) => {
+      if (this.getCurrentFormattedTime() === alarm.time) {
+        return alarm.callback();
       }
     }
     if (this.timerId === null) {
-      const check = setInterval(function () {
+      return this.timerId = setInterval( () => {
         for (let i = 0; i < this.alarmCollection.length; i++) {
-          this.checkClock(this.alarmCollection[i]);
+          checkClock(this.alarmCollection[i]);
         }
-      }, 3000); 
-      return check;
-    }  
+      }, 5000); 
+      
+    };  
   };
 
   stop () {
     if (this.timerId) {
-      clearsetInterval(this.check);
+      clearInterval(this.timerId);
       this.timerId = null;
     };
-  }
+  };
  
   printAlarms () {
     this.alarmCollection.forEach((item) => console.log('id:' + item.id + '; ' + 'time ' + item.time));
