@@ -45,8 +45,7 @@ function debounceDecoratorNew(func) {
   };
 };
 
-function debounceDecorator2(func) {
-
+function debounceDecorator2(func, ms) {
   let flag = false;
   let timeout;
   wrapper.count = 0;
@@ -57,17 +56,20 @@ function debounceDecorator2(func) {
     if (flag === false) {
       func.apply(this, args);
       flag = true;
+      wrapper.count += 1;
     } else { 
       clearTimeout(timeout);        
       timeout = setTimeout(() => {
         func.apply(this, args);
         flag = false;
-      },ms);
+        wrapper.count += 1;
+      }         
+      ,ms);
     };
-     
-    wrapper.count += 1;
-  };
-
-  return wrapper;
-  console.log(wrapper.count)
-};
+     //wrapper.count += 1;
+      console.log(wrapper.count)
+    }
+    return wrapper;
+    console.log(wrapper.count);
+  }
+//console.log(upgradedSendSignal.count);
